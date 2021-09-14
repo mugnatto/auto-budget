@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 print("======================================================================================================")
 print("Este programa carrega um arquivo em XLSX contendo duas planilhas")
 print('Ambas planilhas devem estar no mesmo arquivo excel e mesmo diretório do programa para funcionar.')
@@ -18,6 +19,7 @@ file = input('digite o nome da planliha do pedido+tabela sem a extensão (.xlsx,
 #orcamento = '' # planilha que sera inserida os dados processados
 arquivo = file+".xlsx"
 print('CARREGANDO DADOS...')
+print("======================================================================================================")
 
 
 
@@ -25,6 +27,7 @@ def unpack(a,b): # Transforma a planilha do fabricante em lista
     for a in b.items():
         (indice, resultados ) = a # faz o unpack da tupla para retornar apenas o dict
         print(resultados)
+    return resultados
 
 
 
@@ -46,13 +49,13 @@ dic2 = itens_do_fabricante.to_dict('index')
 print('Pedido do cliente')
 print("======================================================================================================")
 cliente = unpack(produtos_pedidos,dic1)
-print(cliente)
+print(type(cliente))
 print("======================================================================================================")
 
 print("Tabela do fabricante")
 print("======================================================================================================")
 fabricante = unpack(produtos_pedidos,dic2)
-print(fabricante)
+print(type(fabricante))
 print("======================================================================================================")
 
 
