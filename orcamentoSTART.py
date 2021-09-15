@@ -15,11 +15,10 @@ print("=========================================================================
 
 # planilhas
 empresa = input("Digite o nome do cliente? ")
-file = input('Digite o nome da planliha do pedido+tabela sem a extensão (.xlsx, .xls): ')  # substituir file1
-# orcamento = '' # planilha que sera inserida os dados processados
+file = input('Digite o nome da planliha do pedido+tabela sem a extensão (.xlsx, .xls): ')
 arquivo = file + ".xlsx"
-print('CARREGANDO DADOS...')
 
+print('CARREGANDO DADOS...')
 print('*****************')
 print('PEDIDO DO CLIENTE')
 print('*****************')
@@ -27,7 +26,7 @@ print('*****************')
 # Essa parte do código LÊ o arquivo do pedido
 
 data1 = pd.read_excel(arquivo, sheet_name=0)
-pedido = data1[["Descr. Produto", 'Valor Unitario', 'Quantidade']]
+pedido = data1[["Descr. Produto", 'Quantidade']]
 print(pedido)
 
 # data1.count(axis='columns')
@@ -38,7 +37,8 @@ print('*****************')
 
 # Essa parte do código LÊ o arquivo da fábrica
 data2 = pd.read_excel(arquivo, sheet_name=1)
-itens_do_fabricante = data2[['Cód.',"Descr. Produto",'Valor Unitario','Quantidade']]
+itens_do_fabricante = data2[['Cód.',"Descr. Produto",'Unid.','Valor Unitario','Quantidade']]
+
 fabricante = itens_do_fabricante.to_dict('index')
 print(itens_do_fabricante)
 
@@ -48,9 +48,17 @@ print(comum)
 comum2 = pd.merge(comum, pedido, on=['Descr. Produto'])
 print(comum2)
 comum2['Valor Final'] = comum2['Valor Unitario'] * comum2['Quantidade']
-comum2['Valor Total'] =
 
-df = comum2[['Cód.',"Descr. Produto",'Valor Unitario','Quantidade', 'Valor Final']]
+
+df = comum2[['Cód.',"Descr. Produto",'Unid.','Valor Unitario','Quantidade', 'Valor Final']]
 df.to_excel('Orçamento %s.xlsx' % empresa)
 print('==================================================')
 print('Arquivo salvo como: Orçamento %s.xlsx' % empresa)
+
+"""
+Atualizacoes futuras:
+-Adicionar uma celula que soma todos os valores unitairos
+-Permitir que a planilha nao precise ter o nome das colunas formatados
+-Automatizar a busca para marcar apenas os nomes que n'ao foram encontrados na tabela do fornecedor
+para reduzir o trabalho manual de buscar um por um.
+"""
